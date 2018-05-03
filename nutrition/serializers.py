@@ -16,7 +16,7 @@ class FoodSerializer(ModelSerializer):
     class Meta:
         model = Food
         fields = (
-            'id', 'nbdno', 'name', 'weight', 'measure', 'img', 'nutrients'
+            'id', 'ndbno', 'name', 'weight', 'measure', 'image_url', 'nutrients'
         )
 
 

@@ -4,4 +4,7 @@ staticfiles
 .env
 db.sqlite3
 .idea
+scripts/
+nutrition/migrations/
+
 # re enable collectstatic

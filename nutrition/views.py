@@ -8,9 +8,9 @@ from nutrition.serializers import FoodSerializer
 # Create your views here.
 class FoodList(ListAPIView):
     serializer_class = FoodSerializer
-    queryset = Food.objects.all()
+    queryset = Food.objects.all().order_by('id')
 
 
 class FoodDetail(RetrieveAPIView):
     serializer_class = FoodSerializer
-    queryset = Food.objects.all()
+    queryset = Food.objects.all().order_by('id')
