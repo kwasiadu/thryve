@@ -4,7 +4,9 @@ staticfiles
 .env
 db.sqlite3
 .idea
-scripts/
 nutrition/migrations/
+scripts/load_db.py
+node_modules/
+
 
 # re enable collectstatic

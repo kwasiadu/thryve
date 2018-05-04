@@ -30,8 +30,10 @@ class Nutrient(models.Model):
     nutrient_id = models.CharField(max_length=8)
     nutrient = models.CharField(max_length=64)
     unit = models.CharField(max_length=8)
-    value = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
-    gm = models.DecimalField(max_digits=10, decimal_places=2, blank=True)
+    value = models.DecimalField(max_digits=10, decimal_places=2,
+                                blank=True, null=True)
+    gm = models.DecimalField(max_digits=10, decimal_places=2,
+                             blank=True, null=True)
 
     class Meta:
         unique_together = ('food', 'nutrient_id')

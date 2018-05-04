@@ -1,0 +1,57 @@
+[
+  {
+    "model": "nutrition.food",
+    "pk": 1,
+    "fields": {
+      "ndbno": "09002",
+      "name": "Acerola juice, raw",
+      "weight": 242.0,
+      "measure": "1.0 cup"
+    }
+  },
+
+  {
+    "model": "nutrition.food",
+    "pk": 2,
+    "fields": {
+      "ndbno": "09001",
+      "name": "Acerola, (west indian cherry), raw",
+      "weight": 98.0,
+      "measure": "1.0 cup"
+    }
+  },
+
+  {
+    "model": "nutrition.food",
+    "pk": 3,
+    "fields": {
+      "ndbno": "14006",
+      "name": "Alcoholic beverage, beer, light",
+      "weight": 29.5,
+      "measure": "1.0 fl oz"
+    }
+  },
+
+  {
+    "model": "nutrition.food",
+    "pk": 4,
+    "fields": {
+      "ndbno": "14007",
+      "name": "Alcoholic beverage, beer, light, BUD LIGHT",
+      "weight": 29.5,
+      "measure": "1.0 fl oz"
+    }
+  },
+
+  {
+    "model": "nutrition.food",
+    "pk": 5,
+    "fields": {
+      "ndbno": "14005",
+      "name": "Alcoholic beverage, beer, light, BUDWEISER SELECT",
+      "weight": 29.5,
+      "measure": "1.0 fl oz"
+    }
+  }
+
+]

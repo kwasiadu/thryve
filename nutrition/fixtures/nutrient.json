@@ -1,0 +1,75 @@
+[
+  {
+    "model": "nutrition.nutrient",
+    "fields": {
+      "nutrient_id": "221",
+      "nutrient": "Alcohol, ethyl",
+      "unit": "g",
+      "value": "0.0",
+      "gm": 0.0,
+      "food_id": 6
+    }
+  },
+
+  {
+    "model": "nutrition.nutrient",
+    "fields": {
+      "nutrient_id": "203",
+      "nutrient": "Protein",
+      "unit": "g",
+      "value": "0.97",
+      "gm": 0.4,
+      "food_id": 6
+    }
+  },
+
+  {
+    "model": "nutrition.nutrient",
+    "fields": {
+      "nutrient_id": "204",
+      "nutrient": "Total lipid (fat)",
+      "unit": "g",
+      "value": "0.73",
+      "gm": 0.3,
+      "food_id": 6
+    }
+  },
+
+  {
+    "model": "nutrition.nutrient",
+    "fields": {
+      "nutrient_id": "205",
+      "nutrient": "Carbohydrate, by difference",
+      "unit": "g",
+      "value": "7.54",
+      "gm": 7.69,
+      "food_id": 6
+    }
+  },
+
+  {
+    "model": "nutrition.nutrient",
+    "fields": {
+      "nutrient_id": "269",
+      "nutrient": "Sugars, total",
+      "unit": "g",
+      "value": null,
+      "gm": null,
+      "food_id": 6
+    }
+  },
+
+  {
+    "model": "nutrition.nutrient",
+    "fields": {
+      "nutrient_id": "207",
+      "nutrient": "Ash",
+      "unit": "g",
+      "value": "0.32",
+      "gm": 0.09,
+      "food_id": 6
+    }
+  }
+  
+
+]
