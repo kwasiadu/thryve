@@ -3,7 +3,7 @@ from decimal import Decimal
 
 data_fname = 'data/food_data.json'
 food_fname = 'nutrition/fixtures/food.json'
-nutrient_fname = 'nutrition/fixtures/nutrient_test.json'
+nutrient_fname = 'nutrition/fixtures/nutrient.json'
 
 
 def convert_dict_fields(my_dict, field='value', conversion_method=None):
