@@ -5,7 +5,7 @@ import CardList from "./CardList";
 
 const App = () => (
     <FoodDataProvider
-        endpoint="food/"
+        endpoint="foods/"
         render={data => <CardList data={data} />}
     />
 

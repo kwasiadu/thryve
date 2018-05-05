@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from food.views import IndexView
+from nutrition.views import FoodSearch
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('food/', include('nutrition.urls')),
+    path('foods/', include('nutrition.urls')),
     path('', IndexView.as_view(), name='index'),
 ]
