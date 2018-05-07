@@ -24,11 +24,13 @@ class FoodItem extends React.Component {
                     <h4 className='FoodDetail_title FoodDetail_tooltip'>{ this.truncate(food.name) }
                         <span className="FoodDetail_tooltiptext">{ food.name }</span>
                     </h4>
+                    <div className="extra-details hide">
                     <div className='FoodDetail_info'>
                         <span>wt: { food.weight }</span>
                         <span>measure: { food.measure }</span>
                     </div>
                     <NutrientTable nutrients={ food.nutrients } />
+                    </div>
                 </div>
             </Link>
         );
@@ -124,35 +126,35 @@ class SearchBar extends React.Component {
                 />
                 <div className="nutrient-filter hide">
                     <div className="form-group">
-                    <label>Energy</label>
-                    <input
-                        type="number"
-                        name="energy"
-                        placeholder="0"
-                        value={this.props.energy}
-                        onChange={this.handleSearchTextChange}
-                    />
+                        <label>Energy</label>
+                        <input
+                            type="number"
+                            name="energy"
+                            placeholder="0"
+                            value={this.props.energy}
+                            onChange={this.handleSearchTextChange}
+                        />
                     </div>
                     <div className="form-group">
-                    <label>Protein</label>
-                    <input
+                        <label>Protein</label>
+                        <input
 
+                            type="number"
+                            name="protein"
+                            placeholder="0"
+                            value={this.props.protein}
+                            onChange={this.handleSearchTextChange}
+                        />
+                    </div>
+                    <div className="form-group">
+                        <label>Ash</label><input
                         type="number"
-                        name="protein"
+                        name="ash"
                         placeholder="0"
-                        value={this.props.protein}
+                        value={this.props.ash}
                         onChange={this.handleSearchTextChange}
                     />
                     </div>
-                        <div className="form-group">
-                    <label>Ash</label><input
-                    type="number"
-                    name="ash"
-                    placeholder="0"
-                    value={this.props.ash}
-                    onChange={this.handleSearchTextChange}
-                        />
-                        </div>
                 </div>
             </form>
         );
