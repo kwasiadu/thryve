@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Link, Switch } from 'react-router-dom';
 
 import './Food.css'
-
+import './SearchBar.css'
 
 
 class FoodItem extends React.Component {
@@ -113,34 +113,47 @@ class SearchBar extends React.Component {
 
     render() {
         return (
-            <form>
+            <form className="SearchBar_form">
                 <input
+                    className="search-input"
                     type="text"
                     name="searchText"
                     placeholder="Search..."
                     value={this.props.searchText}
                     onChange={this.handleSearchTextChange}
                 />
-                <input
-                    type="text"
-                    name="energy"
-                    placeholder="Energy"
-                    value={this.props.energy}
+                <div className="nutrient-filter hide">
+                    <div className="form-group">
+                    <label>Energy</label>
+                    <input
+                        type="number"
+                        name="energy"
+                        placeholder="0"
+                        value={this.props.energy}
+                        onChange={this.handleSearchTextChange}
+                    />
+                    </div>
+                    <div className="form-group">
+                    <label>Protein</label>
+                    <input
+
+                        type="number"
+                        name="protein"
+                        placeholder="0"
+                        value={this.props.protein}
+                        onChange={this.handleSearchTextChange}
+                    />
+                    </div>
+                        <div className="form-group">
+                    <label>Ash</label><input
+                    type="number"
+                    name="ash"
+                    placeholder="0"
+                    value={this.props.ash}
                     onChange={this.handleSearchTextChange}
-                />
-                <input
-                    type="text"
-                    name="protein"
-                    placeholder="Protein"
-                    value={this.props.protein}
-                    onChange={this.handleSearchTextChange}
-                /><input
-                type="text"
-                name="ash"
-                placeholder="Ash"
-                value={this.props.ash}
-                onChange={this.handleSearchTextChange}
-            />
+                        />
+                        </div>
+                </div>
             </form>
         );
     }
@@ -242,7 +255,7 @@ class FoodSearch extends React.Component {
 
             });
     }
-    
+
 
     render() {
         return (

@@ -17,11 +17,15 @@ a:hover {
 .FoodDetail {
     height: 400px;
     width: 250px;
-    margin: 10px 10px 10px 10px;
+    margin: 10px auto;
     opacity: 1;
     box-shadow: 1px 1px 5px 1px black;
     transition: box-shadow 0.5s, opacity 0.5s;
     position: relative;
+}
+
+.FoodDetail .shorten {
+    height: 200px;
 }
 
 .FoodDetail:hover {
@@ -76,7 +80,7 @@ a:hover {
     border-bottom: solid black 2px;
     border-top: solid black 2px;
     width: 100%;
-    gigitmax-width: 230px;
+    max-width: 230px;
     margin: 0 auto;
 }
 
@@ -87,3 +91,4 @@ a:hover {
 .FoodDetail table td {
     font-size: 10px;
 }
+
