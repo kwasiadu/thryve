@@ -1,14 +1,17 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import FoodDataProvider from "./FoodDataProvider";
-import CardList from "./CardList";
+
+import FoodSearch from './FoodSearch';
+import { BrowserRouter } from 'react-router-dom';
+
+
 
 const App = () => (
-    <FoodDataProvider
-        endpoint="foods/"
-        render={data => <CardList data={data} />}
-    />
+    <FoodSearch />
+)
 
-);
-
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(
+    (<BrowserRouter>
+        <App />
+    </BrowserRouter>),
+    document.getElementById('app'));

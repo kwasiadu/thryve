@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from food.views import IndexView
 from nutrition.views import FoodSearch
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('foods/', include('nutrition.urls')),
-    path('', IndexView.as_view(), name='index'),
+    # All other routes to be handled by React-Router
+    re_path(r'^.*', IndexView.as_view(), name='index'),
 ]
