@@ -15,7 +15,7 @@ class NutrientFilter(filters.FilterSet):
 
         if q_params:
             # TODO: find out why there are trailing spaces
-            name_list = q_params['searchText']
+            name_list = q_params.get('searchText', '')
             if len(name_list) > 0:
                 name = name_list[0]
                 results = parent.filter(name__icontains=name)

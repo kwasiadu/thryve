@@ -81,7 +81,6 @@ class FoodList extends React.Component {
     render() {
         const rows = [];
         const foods = this.props.foods || [];
-        console.log('foods', foods)
 
 
         foods.forEach((food) => {
@@ -110,7 +109,6 @@ class SearchBar extends React.Component {
     handleSearchTextChange(e) {
         this.props.onSearchTextChange(e.target);
     }
-
 
 
     render() {
@@ -179,53 +177,64 @@ class FoodSearch extends React.Component {
             protein: "",
             url: "/foods/"
         };
-
         this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
     }
 
     componentDidMount() {
-        console.log('component mounted', this.state.url)
         this.getFoods(this.state.url);
     }
 
+    componentWillUnmount () {
+        if(this.getFoodsTimeout) {
+            clearTimeout(this.getFoodsTimeout)
+        }
+
+        if(this.updateUrlTimeout) {
+            clearTimeout(this.updateUrlTimeout);
+        }
+
+    }
+
     handleSearchTextChange(elm) {
+        console.log('handle change')
         this.getUrlandUpdateInput(elm);
-        this.getFoods(this.state.url);
+        this.getFoodsTimeout = window.setTimeout(function () {
+            this.getFoods(this.state.url)
+        }.bind(this), 250)
+
     }
 
     getUrlandUpdateInput(elm) {
 
         const updateUrl = () => {
-            console.log('state', this.state)
             let initUrl = `/foods/?searchText=${this.state.searchText}`;
             const urlGenerator = (url, term) => url + '&' + `nutrient=${term}` + `&value=${this.state[term]}`;
 
             let url = terms.reduce(urlGenerator, initUrl);
             this.setState({
                 url: url
-            })
+            });
+            this.updateUrlTimeout = null;
         }
 
         const terms = ['energy', 'protein', 'ash'];
         this.setState({
             [elm.name]: elm.value,
         });
-        window.setTimeout(updateUrl, 0)
+        this.updateUrlTimeout = window.setTimeout(updateUrl, 0);
     }
 
 
     getFoods(url) {
-        console.log('url', url);
         fetch(url)
             .then(response => {
-                console.log('res', response)
                 if (response.status !== 200) {
                     return this.setState({ errorMessage: "Something went wrong", foods: [] });
                 }
+                this.timeout = null;
                 return response.json();
             })
             .then(data => {
-                console.log('foodstate', data)
                 if(data.length > 0) {
                     this.setState({ errorMessage: "No results found"})
                 }
@@ -233,9 +242,7 @@ class FoodSearch extends React.Component {
 
             });
     }
-
-
-
+    
 
     render() {
         return (
