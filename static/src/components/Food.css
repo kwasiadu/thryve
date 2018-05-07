@@ -73,12 +73,15 @@ a:hover {
 
 .FoodDetail table {
     color: black;
-    border: solid black 1px;
+    border-bottom: solid black 2px;
+    border-top: solid black 2px;
     width: 100%;
+    gigitmax-width: 230px;
+    margin: 0 auto;
 }
 
 .FoodDetail table tr {
-    border: dotted black 1px;
+    border-bottom: dotted black 1px;
 }
 
 .FoodDetail table td {
