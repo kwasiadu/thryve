@@ -3,7 +3,7 @@ import dj_database_url
 from food.settings.base import *
 
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['thryve-food.herokuapp.com']
 
