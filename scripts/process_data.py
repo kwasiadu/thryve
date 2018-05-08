@@ -6,6 +6,7 @@ food_fname = 'nutrition/fixtures/food.json'
 nutrient_fname = 'nutrition/fixtures/nutrient.json'
 
 
+# clean up dirty data in dict
 def convert_dict_fields(my_dict, field='value', conversion_method=None):
     if my_dict[field] == '--':
         my_dict[field] = None
@@ -13,6 +14,7 @@ def convert_dict_fields(my_dict, field='value', conversion_method=None):
         my_dict[field] = conversion_method(my_dict[field])
 
 
+# Transform dict into one that can be loaded in the database
 def process_data(data):
     foods = []
     nutrients = []

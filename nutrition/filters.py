@@ -8,11 +8,13 @@ class NutrientFilter(filters.FilterSet):
         model = Food
         fields = ()
 
+    # overwriting FilterSet method in order to construct the right query
     @property
     def qs(self):
         parent = super(NutrientFilter, self).qs
         q_params = dict(getattr(self.request, 'query_params', None))
 
+        # get the search/filter parameters from the request url query parameters
         if q_params:
             # TODO: find out why there are trailing spaces
             name_list = q_params.get('searchText', '')
@@ -24,6 +26,7 @@ class NutrientFilter(filters.FilterSet):
             nutrients = q_params.get('nutrient', [])
             values = q_params.get('value', [])
 
+            # get the nutrient values from the request url
             for idx, nut in enumerate(nutrients):
                 if len(values) > 0 and values[idx] == '':
                     values[idx] = 0

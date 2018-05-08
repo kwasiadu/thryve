@@ -84,18 +84,21 @@ class FoodSearch extends React.Component {
                 searchText: elm.value
             });
         } else {
-            const state = Object.assign({}, this.state);
-            state.filters.map((nutrient) => {
-                for(let name in nutrient) {
+            let filters = this.state.filters;
+            filters.map((filter) => {
+                for(let name in filter) {
                     if(name === elm.name) {
-                        nutrient[name] = elm.value;
+                        filter[name] = elm.value;
                     }
                 }
             });
-            this.setState(state);
+
+            this.setState({
+                filters: filters
+            });
         }
 
-        this.updateUrlTimeout = window.setTimeout(updateUrl, 500);
+        this.updateUrlTimeout = window.setTimeout(updateUrl, 0);
     }
 
     /**
@@ -116,7 +119,6 @@ class FoodSearch extends React.Component {
                     this.setState({ errorMessage: "No results found"})
                 }
                 this.setState({ foods: data, loaded: true, errorMessage: "" });
-
             });
     }
 
