@@ -15,6 +15,8 @@ class FoodSearch extends React.Component {
             originalFoods: [],
             errorMessage: "",
             url: "/foods/",
+            flag: "and",
+            searchWithLoadedData: false,
             filters: [
                 { Energy: 0 },
                 { Protein: 0 },
@@ -27,7 +29,6 @@ class FoodSearch extends React.Component {
             ]
         };
         this.handleInputChange = this.handleInputChange.bind(this);
-        this.searchLoadedData = this.searchLoadedData.bind(this);
     }
 
     componentDidMount() {
@@ -67,16 +68,20 @@ class FoodSearch extends React.Component {
     getUrlandUpdateInput(elm) {
 
         const updateUrl = () => {
-            let initUrl = `/foods/?searchText=${this.state.searchText}`;
+            let initUrl = `/foods/?searchText=${this.state.searchText}&`;
             const urlGenerator = (url, nutrient) => {
                 for(let name in nutrient) {
-                    url = url + '&' + `nutrient=${name}` +
-                    `&value=${nutrient[name]}`;
+                    if(nutrient[name] > 0) {
+                        url = url + `nutrient=${name}` +
+                            `&min_value=${nutrient[name]}&max_value=1000&`;
+                    }
                 }
                 return url
             };
 
-            let url = this.state.filters.reduce(urlGenerator, initUrl);
+            let url = this.state.filters.reduce(urlGenerator, initUrl) +
+                `flag=${this.state.flag}`;
+
             this.setState({
                 url: url
             });
@@ -106,13 +111,21 @@ class FoodSearch extends React.Component {
         this.updateUrlTimeout = window.setTimeout(updateUrl, 0);
     }
 
+
+    getFoods(url) {
+        if(this.state.loaded && this.state.searchWithLoadedData) {
+            this.searchLoadedData();
+            console.info('using loaded data');
+        } else {
+           this.getFoodsFromAPI(url)
+        }
+    }
     /**
      * @desc Calls the API and updates state with returned data
      * @param url
      */
-    getFoods(url) {
-        if(!this.state.loaded) {
-            fetch(url)
+    getFoodsFromAPI(url) {
+        fetch(url)
                 .then(response => {
                     if (response.status !== 200) {
                         return this.setState({
@@ -135,10 +148,6 @@ class FoodSearch extends React.Component {
                         errorMessage: ""
                     });
                 });
-        } else {
-            console.info('using loaded data');
-            this.searchLoadedData();
-        }
     }
 
     /**

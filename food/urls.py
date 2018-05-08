@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include, re_path
 from food.views import IndexView
-from nutrition.views import FoodSearch
 
 urlpatterns = [
     path('admin/', admin.site.urls),
