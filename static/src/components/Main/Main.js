@@ -2,7 +2,6 @@ import React from "react";
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from "prop-types";
 import FoodList from '../FoodList/FoodList';
-import FoodItem from '../FoodItem/FoodItem';
 
 class Main extends React.Component {
 
@@ -11,10 +10,8 @@ class Main extends React.Component {
         return (
             <main>
                 <Switch>
-                    <Route exact path='/'
+                    <Route path='/'
                            render={() => <FoodList foods={this.props.foods}/>}/>
-                    <Route path='/:id'
-                           render={({match}) => <FoodItem foods={this.props.foods[match.params.id - 1]}/>}/>
                 </Switch>
             </main>
         );

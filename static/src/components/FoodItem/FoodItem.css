@@ -1,21 +1,18 @@
 .FoodDetail {
     height: 400px;
     width: 250px;
-    margin: 10px auto;
+    margin: 50px auto;
     opacity: 1;
     box-shadow: 1px 1px 5px 1px black;
-    transition: box-shadow 0.5s, opacity 0.5s;
+    transition: height 0.3s;
     position: relative;
 }
 
-.FoodDetail .shorten {
-    height: 200px;
+.FoodDetail.short {
+    height: 240px;
 }
 
-.FoodDetail:hover {
-    opacity: 0.8;
-    box-shadow: 1px 1px 5px 1px red;
-}
+
 
 .FoodDetail_img {
     width: 250px;
@@ -23,7 +20,7 @@
 
 .FoodDetail_title {
     color: red;
-    text-transform: capitalize;
+    text-align: center;
     padding: 5px;
     height: 60px;
 }

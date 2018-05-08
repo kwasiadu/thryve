@@ -37,7 +37,6 @@ class FoodSearch extends React.Component {
     }
 
     handleSearchTextChange(elm) {
-        console.log('handle change')
         this.getUrlandUpdateInput(elm);
         this.getFoodsTimeout = window.setTimeout(function () {
             this.getFoods(this.state.url)
@@ -70,6 +69,7 @@ class FoodSearch extends React.Component {
         fetch(url)
             .then(response => {
                 if (response.status !== 200) {
+                    console.error('Something went wrong');
                     return this.setState({ errorMessage: "Something went wrong", foods: [] });
                 }
                 this.timeout = null;
@@ -79,8 +79,7 @@ class FoodSearch extends React.Component {
                 if(data.length > 0) {
                     this.setState({ errorMessage: "No results found"})
                 }
-                this.setState({ foods: data, loaded: true })
-
+                this.setState({ foods: data, loaded: true });
             });
     }
 
