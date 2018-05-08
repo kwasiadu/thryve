@@ -25,7 +25,7 @@ class FoodSearch extends React.Component {
                 { Ash: 0 }
             ]
         };
-        this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
     componentDidMount() {
@@ -43,7 +43,11 @@ class FoodSearch extends React.Component {
 
     }
 
-    handleSearchTextChange(elm) {
+    /**
+     * @desc handle changes made to search or filter inputs
+     * @param elm {Object}: Html input element
+     */
+    handleInputChange(elm) {
         this.getUrlandUpdateInput(elm);
         this.getFoodsTimeout = window.setTimeout(function () {
             this.getFoods(this.state.url)
@@ -51,7 +55,12 @@ class FoodSearch extends React.Component {
 
     }
 
+    /**
+     * @desc constructs the url based on the search and filter inputs
+     * @param elm
+     */
     getUrlandUpdateInput(elm) {
+
         const updateUrl = () => {
             let initUrl = `/foods/?searchText=${this.state.searchText}`;
             const urlGenerator = (url, nutrient) => {
@@ -69,21 +78,30 @@ class FoodSearch extends React.Component {
             this.updateUrlTimeout = null;
         };
 
+
         if(elm.name === 'searchText') {
             this.setState({
                 searchText: elm.value
             });
         } else {
             const state = Object.assign({}, this.state);
-            state.filters[elm.name] = elm.value;
+            state.filters.map((nutrient) => {
+                for(let name in nutrient) {
+                    if(name === elm.name) {
+                        nutrient[name] = elm.value;
+                    }
+                }
+            });
             this.setState(state);
         }
 
-
-        this.updateUrlTimeout = window.setTimeout(updateUrl, 0);
+        this.updateUrlTimeout = window.setTimeout(updateUrl, 500);
     }
 
-
+    /**
+     * @desc Calls the API and updates state with returned data
+     * @param url
+     */
     getFoods(url) {
         fetch(url)
             .then(response => {
@@ -109,7 +127,7 @@ class FoodSearch extends React.Component {
                 <Header/>
                 <SearchBar searchText={this.state.searchText}
                            filters={this.state.filters}
-                           onSearchTextChange={this.handleSearchTextChange}/>
+                           onSearchTextChange={this.handleInputChange}/>
                 <Main
                     foods={this.state.foods}
                     errorMessage={this.state.errorMessage}

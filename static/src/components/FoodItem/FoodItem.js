@@ -1,9 +1,8 @@
 import React from "react";
-import { Link } from 'react-router-dom';
-
+import PropTypes from "prop-types";
 import NutrientTable from '../NutrientTable/NutrientTable';
 import './FoodItem.css';
-import PropTypes from "prop-types";
+
 
 class FoodItem extends React.Component {
 
@@ -17,6 +16,10 @@ class FoodItem extends React.Component {
         this.truncate = this.truncate.bind(this);
     }
 
+    /**
+     * @desc toggle visibiltiy of extra details(measure, value, nutrients)
+     * of FoodItem
+     */
     toggleDetails() {
         this.toggleDetailsTimeout = window.setTimeout(function () {
             this.setState({
@@ -27,13 +30,21 @@ class FoodItem extends React.Component {
 
     }
 
+    /**
+     * @desc shorten long strings (like food name) when food item
+     * is not expanded
+     * @param string
+     * @param limit
+     * @returns {*}
+     */
     truncate(string, limit=40) {
-        if(this.state.hidden && string.length > limit) {
+        if(this.state.detailsHidden && string.length > limit) {
             return string.slice(0, limit) + " ..."
         } else {
             return string
         }
     }
+
 
     componentWillUnmount () {
         if(this.toggleDetailsTimeout) {

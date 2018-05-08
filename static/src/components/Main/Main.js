@@ -4,6 +4,10 @@ import PropTypes from "prop-types";
 import FoodList from '../FoodList/FoodList';
 import './Main.css';
 
+
+/**
+ * @desc Main content of App
+ */
 class Main extends React.Component {
 
     render() {

@@ -1,5 +1,5 @@
 .FoodDetail {
-    height: 400px;
+    height: 450px;
     width: 250px;
     margin: 50px auto;
     opacity: 1;
@@ -9,7 +9,7 @@
 }
 
 .FoodDetail.short {
-    height: 240px;
+    height: 250px;
 }
 
 

@@ -6,21 +6,25 @@ class SearchBar extends React.Component {
 
     constructor(props) {
         super(props);
-        this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
 
-    handleSearchTextChange(e) {
+    handleInputChange(e) {
         this.props.onSearchTextChange(e.target);
     }
 
-
+    /**
+     * @desc dynamically creates filter inputs and renders them
+     * along with the search input
+     * @returns {*}
+     */
     render() {
 
         const searchFilters = [];
         this.props.filters.forEach((filterObj) => {
             for(let name in filterObj) {
                 let label;
-                if(name === 'energy') {
+                if(name === 'Energy') {
                     label = <label>{name + '(kcal)'}</label>;
                 } else {
                     label = <label>{name + '(g)'}</label>;
@@ -34,7 +38,7 @@ class SearchBar extends React.Component {
                         name={name}
                         value={this.props.filters[name]}
                         placeholder="0"
-                        onChange={this.handleSearchTextChange}
+                        onChange={this.handleInputChange}
                     />
                 </div>
             )
@@ -50,7 +54,7 @@ class SearchBar extends React.Component {
                     name="searchText"
                     placeholder="Search..."
                     value={this.props.searchText}
-                    onChange={this.handleSearchTextChange}
+                    onChange={this.handleInputChange}
                 />
                 <div className="nutrient-filter">{searchFilters}</div>
             </form>
