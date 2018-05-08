@@ -13,8 +13,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'food',
-        'USER': os.environ.get('FOOD_DATABASE_USER', 'kwasi'),
-        'PASSWORD': os.environ.get('FOOD_DATABASE_PASSWORD', 'D15turb3d'),
+        'USER': os.environ.get('FOOD_DATABASE_USER'),
+        'PASSWORD': os.environ.get('FOOD_DATABASE_PASSWORD'),
         'HOST': 'localhost',
         'PORT': '',
     }

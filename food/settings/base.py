@@ -32,8 +32,7 @@ STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("FOOD_SECRET_KEY",
-                            "=fsl9*&t9=&5-_a$tr)!kr(gv6llgq#%bjhe*%2p1h@fupqucy")
+SECRET_KEY = os.environ.get("FOOD_SECRET_KEY")
 
 
 # Application definition
