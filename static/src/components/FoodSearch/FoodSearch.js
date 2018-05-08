@@ -12,6 +12,7 @@ class FoodSearch extends React.Component {
             searchText: '',
             loaded: false,
             foods: [],
+            originalFoods: [],
             errorMessage: "",
             url: "/foods/",
             filters: [
@@ -26,10 +27,14 @@ class FoodSearch extends React.Component {
             ]
         };
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.searchLoadedData = this.searchLoadedData.bind(this);
     }
 
     componentDidMount() {
-        this.getFoods(this.state.url);
+        if (!this.state.loaded) {
+            this.getFoods(this.state.url);
+        } else {
+        }
     }
 
     componentWillUnmount () {
@@ -106,20 +111,73 @@ class FoodSearch extends React.Component {
      * @param url
      */
     getFoods(url) {
-        fetch(url)
-            .then(response => {
-                if (response.status !== 200) {
-                    return this.setState({ errorMessage: "Something went wrong", foods: [] });
+        if(!this.state.loaded) {
+            fetch(url)
+                .then(response => {
+                    if (response.status !== 200) {
+                        return this.setState({
+                            errorMessage: "Something went wrong",
+                            foods: []
+                        });
+                    }
+                    this.timeout = null;
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.length > 0) {
+                        this.setState({errorMessage: "No results found"})
+                    }
+                    console.info('server data loaded');
+                    this.setState({
+                        foods: data,
+                        originalFoods: data,
+                        loaded: true,
+                        errorMessage: ""
+                    });
+                });
+        } else {
+            console.info('using loaded data');
+            this.searchLoadedData();
+        }
+    }
+
+    /**
+     * Apply search parameters to loaded data and display results
+     */
+    searchLoadedData() {
+        const searchResults = [];
+        const searchText = this.state.searchText.toLowerCase();
+        let flag = true;
+        this.state.originalFoods.map(food => {
+            if(food.name.toLowerCase().indexOf(searchText) > -1) {
+                food.nutrients.map((nutrient) => {
+                    this.state.filters.map(filter => {
+                        for(let filterName in filter) {
+                            if((nutrient.nutrient.toLowerCase().indexOf(filterName.toLowerCase()) > -1) &&
+                                (Number(nutrient.value) < filter[filterName])) {
+                                flag = false;
+                                break;
+                            }
+                        }
+                    })
+                })
+                if(flag) {
+                    if (food.nutrients.length > 0) {
+                        searchResults.push(food);
+                    } else {
+                    }
+
                 }
-                this.timeout = null;
-                return response.json();
-            })
-            .then(data => {
-                if(data.length > 0) {
-                    this.setState({ errorMessage: "No results found"})
-                }
-                this.setState({ foods: data, loaded: true, errorMessage: "" });
-            });
+                flag = true;
+            }
+
+        })
+        if (searchResults.length === 0) {
+            this.setState({errorMsg: "No results found"})
+        }
+        this.setState({
+            foods: searchResults
+        })
     }
 
 
