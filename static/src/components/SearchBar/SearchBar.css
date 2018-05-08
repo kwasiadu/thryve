@@ -1,6 +1,5 @@
 .SearchBar_form {
     width: 100%;
-    max-width: 225px;
     margin: 10px auto;
 }
 
@@ -8,21 +7,26 @@
     margin: 10px auto;
     width: 100%;
     max-width: 300px;
-
+    display: block;
 }
 
 .SearchBar_form .nutrient-filter {
+    margin-top: 30px;
     border-top: solid 1px;
     border-bottom: solid 1px;
-}
-
-.SearchBar_form .form-group {
-    width: 100%;
     display: flex;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     align-content: center;
+}
+
+.SearchBar_form .form-group {
+    width: 200px;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
     padding: 5px;
     margin: 5px;
 }
@@ -37,7 +41,7 @@
 
 .SearchBar_form .form-group input {
     background: rgba(255, 0, 0, 0.05);
-    max-width: 100px;
+    width: 60px;
     margin-left: 10px;
 }
 

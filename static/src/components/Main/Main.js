@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from 'react-router-dom';
 import PropTypes from "prop-types";
 import FoodList from '../FoodList/FoodList';
+import './Main.css';
 
 class Main extends React.Component {
 
@@ -11,7 +12,16 @@ class Main extends React.Component {
             <main>
                 <Switch>
                     <Route path='/'
-                           render={() => <FoodList foods={this.props.foods}/>}/>
+                           render={() => {
+                               return(
+                                   <div>
+                                       {    this.props.errorMessage &&
+                                           <p className='errorMsg'>{this.props.errorMessage}</p>
+                                       }
+                                       <FoodList foods={this.props.foods} />
+                                   </div>
+                               )}
+                           }/>
                 </Switch>
             </main>
         );
@@ -20,7 +30,6 @@ class Main extends React.Component {
 
 Main.propTypes = {
     foods: PropTypes.array.isRequired,
-    searchText: PropTypes.string,
     errorMessage: PropTypes.string,
 };
 

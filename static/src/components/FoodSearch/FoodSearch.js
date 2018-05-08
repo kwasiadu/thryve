@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Header from '../Header/Header'
 import Main from '../Main/Main';
 import SearchBar from '../SearchBar/SearchBar';
 
@@ -13,10 +13,17 @@ class FoodSearch extends React.Component {
             loaded: false,
             foods: [],
             errorMessage: "",
-            energy: "",
-            ash: "",
-            protein: "",
-            url: "/foods/"
+            url: "/foods/",
+            filters: [
+                { Energy: 0 },
+                { Protein: 0 },
+                { Fat: 0 },
+                { Carbohydrate: 0 },
+                { Sugars: 0 },
+                { Fiber: 0 },
+                { Alcohol: 0 },
+                { Ash: 0 }
+            ]
         };
         this.handleSearchTextChange = this.handleSearchTextChange.bind(this);
     }
@@ -45,22 +52,34 @@ class FoodSearch extends React.Component {
     }
 
     getUrlandUpdateInput(elm) {
-
         const updateUrl = () => {
             let initUrl = `/foods/?searchText=${this.state.searchText}`;
-            const urlGenerator = (url, term) => url + '&' + `nutrient=${term}` + `&value=${this.state[term]}`;
+            const urlGenerator = (url, nutrient) => {
+                for(let name in nutrient) {
+                    url = url + '&' + `nutrient=${name}` +
+                    `&value=${nutrient[name]}`;
+                }
+                return url
+            };
 
-            let url = terms.reduce(urlGenerator, initUrl);
+            let url = this.state.filters.reduce(urlGenerator, initUrl);
             this.setState({
                 url: url
             });
             this.updateUrlTimeout = null;
+        };
+
+        if(elm.name === 'searchText') {
+            this.setState({
+                searchText: elm.value
+            });
+        } else {
+            const state = Object.assign({}, this.state);
+            state.filters[elm.name] = elm.value;
+            this.setState(state);
         }
 
-        const terms = ['energy', 'protein', 'ash'];
-        this.setState({
-            [elm.name]: elm.value,
-        });
+
         this.updateUrlTimeout = window.setTimeout(updateUrl, 0);
     }
 
@@ -69,7 +88,6 @@ class FoodSearch extends React.Component {
         fetch(url)
             .then(response => {
                 if (response.status !== 200) {
-                    console.error('Something went wrong');
                     return this.setState({ errorMessage: "Something went wrong", foods: [] });
                 }
                 this.timeout = null;
@@ -79,7 +97,8 @@ class FoodSearch extends React.Component {
                 if(data.length > 0) {
                     this.setState({ errorMessage: "No results found"})
                 }
-                this.setState({ foods: data, loaded: true });
+                this.setState({ foods: data, loaded: true, errorMessage: "" });
+
             });
     }
 
@@ -87,14 +106,12 @@ class FoodSearch extends React.Component {
     render() {
         return (
             <div>
+                <Header/>
                 <SearchBar searchText={this.state.searchText}
-                           energy={this.state.energy}
-                           protein={this.state.protein}
-                           ash={this.state.ash}
+                           filters={this.state.filters}
                            onSearchTextChange={this.handleSearchTextChange}/>
                 <Main
                     foods={this.state.foods}
-                    searchText={this.state.searchText}
                     errorMessage={this.state.errorMessage}
                 />
             </div>

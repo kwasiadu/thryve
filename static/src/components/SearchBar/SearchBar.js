@@ -15,6 +15,33 @@ class SearchBar extends React.Component {
 
 
     render() {
+
+        const searchFilters = [];
+        this.props.filters.forEach((filterObj) => {
+            for(let name in filterObj) {
+                let label;
+                if(name === 'energy') {
+                    label = <label>{name + '(kcal)'}</label>;
+                } else {
+                    label = <label>{name + '(g)'}</label>;
+                }
+
+                searchFilters.push(
+                <div className="form-group" key={name}>
+                    {label}
+                    <input
+                        type="number"
+                        name={name}
+                        value={this.props.filters[name]}
+                        placeholder="0"
+                        onChange={this.handleSearchTextChange}
+                    />
+                </div>
+            )
+            }
+
+        })
+
         return (
             <form className="SearchBar_form">
                 <input
@@ -25,38 +52,7 @@ class SearchBar extends React.Component {
                     value={this.props.searchText}
                     onChange={this.handleSearchTextChange}
                 />
-                <div className="nutrient-filter">
-                    <div className="form-group">
-                        <label>Energy</label>
-                        <input
-                            type="number"
-                            name="energy"
-                            placeholder="0"
-                            value={this.props.energy}
-                            onChange={this.handleSearchTextChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Protein</label>
-                        <input
-
-                            type="number"
-                            name="protein"
-                            placeholder="0"
-                            value={this.props.protein}
-                            onChange={this.handleSearchTextChange}
-                        />
-                    </div>
-                    <div className="form-group">
-                        <label>Ash</label><input
-                        type="number"
-                        name="ash"
-                        placeholder="0"
-                        value={this.props.ash}
-                        onChange={this.handleSearchTextChange}
-                    />
-                    </div>
-                </div>
+                <div className="nutrient-filter">{searchFilters}</div>
             </form>
         );
     }
@@ -64,9 +60,7 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
     searchText: PropTypes.string,
-    energy: PropTypes.number,
-    protein: PropTypes.number,
-    ash: PropTypes.number,
+    filters: PropTypes.array.isRequired,
     onSearchTextChange: PropTypes.func.isRequired
 };
 

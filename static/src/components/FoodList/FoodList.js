@@ -7,18 +7,17 @@ import './FoodList.css';
 class FoodList extends React.Component {
 
     render() {
-        const rows = [];
-        const foods = this.props.foods || [];
+        const list = [];
 
-        foods.forEach((food) => {
-            rows.push(
+        this.props.foods.forEach((food) => {
+            list.push(
                 <FoodItem food={food} key={food.id}/>
             );
         });
 
         return (
             <div>
-                <div className="FoodList">{rows}</div>
+                <div className="FoodList">{list}</div>
                 <div>{this.props.errorMessage}</div>
             </div>
         );
