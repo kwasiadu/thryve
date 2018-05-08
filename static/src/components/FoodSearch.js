@@ -24,7 +24,7 @@ class FoodItem extends React.Component {
                     <h4 className='FoodDetail_title FoodDetail_tooltip'>{ this.truncate(food.name) }
                         <span className="FoodDetail_tooltiptext">{ food.name }</span>
                     </h4>
-                    <div className="extra-details hide">
+                    <div className="extra-details">
                     <div className='FoodDetail_info'>
                         <span>wt: { food.weight }</span>
                         <span>measure: { food.measure }</span>
@@ -124,7 +124,7 @@ class SearchBar extends React.Component {
                     value={this.props.searchText}
                     onChange={this.handleSearchTextChange}
                 />
-                <div className="nutrient-filter hide">
+                <div className="nutrient-filter">
                     <div className="form-group">
                         <label>Energy</label>
                         <input
