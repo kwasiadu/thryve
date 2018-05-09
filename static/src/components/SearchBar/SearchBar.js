@@ -21,28 +21,37 @@ class SearchBar extends React.Component {
     render() {
 
         const searchFilters = [];
-        this.props.filters.forEach((filterObj) => {
-            for(let name in filterObj) {
+        this.props.filters.forEach((filter) => {
+
                 let label;
-                if(name === 'Energy') {
-                    label = <label>{name + '(kcal)'}</label>;
+                if(filter.displayName === 'Energy') {
+                    label = <label>{filter.displayName + '(kcal)'}</label>;
                 } else {
-                    label = <label>{name + '(g)'}</label>;
+                    label = <label>{filter.displayName + '(g)'}</label>;
                 }
 
                 searchFilters.push(
-                <div className="form-group" key={name}>
+                <div className="form-group" key={filter.displayName}>
                     {label}
+                    <div className="input-group">
                     <input
                         type="number"
-                        name={name}
-                        value={this.props.filters[name]}
-                        placeholder="0"
+                        name={filter.displayName + '_min'}
+                        value={filter.min_value}
+                        placeholder="min"
                         onChange={this.handleInputChange}
                     />
+                    <input
+                        type="number"
+                        name={filter.displayName + '_max'}
+                        value={filter.max_value}
+                        placeholder="max"
+                        onChange={this.handleInputChange}
+                    />
+                    </div>
                 </div>
             )
-            }
+
 
         })
 

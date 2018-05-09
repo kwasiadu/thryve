@@ -8,6 +8,10 @@ class FoodSearch extends React.Component {
 
     constructor(props) {
         super(props);
+        this.default_min_value = 0;
+        this.default_max_value = 1000;
+        this.searchWithLoadedData = false;
+
         this.state = {
             searchText: '',
             loaded: false,
@@ -16,26 +20,23 @@ class FoodSearch extends React.Component {
             errorMessage: "",
             url: "/foods/",
             flag: "and",
-            searchWithLoadedData: false,
+
             filters: [
-                { Energy: 0 },
-                { Protein: 0 },
-                { Fat: 0 },
-                { Carbohydrate: 0 },
-                { Sugars: 0 },
-                { Fiber: 0 },
-                { Alcohol: 0 },
-                { Ash: 0 }
-            ]
+                { name:"Energy", displayName:"Energy", "min_value": "", "max_value": "" },
+                { name:"Protein", displayName:"Protein", "min_value": "", "max_value": "" },
+                { name:"Total lipid (fat)", displayName:"Fat", "min_value": "", "max_value": "" },
+                { name:"Carbohydrate, by difference", displayName:"Carbohydrate", "min_value": "", "max_value": "" },
+                { name:"Sugars, total", displayName:"Sugars", "min_value": "", "max_value": "" },
+                { name:"Fiber, total dietary", displayName:"Fiber", "min_value": "", "max_value": "" },
+                { name:"Alcohol, ethyl", displayName:"Alcohol", "min_value": "", "max_value": "" },
+                { name:"Ash", displayName:"Ash", "min_value": "", "max_value": "" }]
         };
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.searchLoadedData = this.searchLoadedData.bind(this);
     }
 
     componentDidMount() {
-        if (!this.state.loaded) {
-            this.getFoods(this.state.url);
-        } else {
-        }
+        this.getFoods(this.state.url);
     }
 
     componentWillUnmount () {
@@ -69,13 +70,21 @@ class FoodSearch extends React.Component {
 
         const updateUrl = () => {
             let initUrl = `/foods/?searchText=${this.state.searchText}&`;
-            const urlGenerator = (url, nutrient) => {
-                for(let name in nutrient) {
-                    if(nutrient[name] > 0) {
-                        url = url + `nutrient=${name}` +
-                            `&min_value=${nutrient[name]}&max_value=1000&`;
-                    }
+            const urlGenerator = (url, filter) => {
+                if(filter.min_value && filter.max_value) {
+                    url = url + `nutrient=${filter.displayName}` +
+                        `&min_value=${filter.min_value}&max_value=${filter.max_value}&`;
+                    this.searchWithLoadedData = false;
+                } else if(filter.min_value) {
+                    url = url + `nutrient=${filter.displayName}` +
+                        `&min_value=${filter.min_value}&max_value=${this.default_max_value}&`;
+                    this.searchWithLoadedData = false;
+                } else if(filter.max_value) {
+                    url = url + `nutrient=${filter.displayName}` +
+                        `&min_value=${this.default_min_value}&max_value=${filter.max_value}&`;
+                    this.searchWithLoadedData = false;
                 }
+
                 return url
             };
 
@@ -93,13 +102,14 @@ class FoodSearch extends React.Component {
             this.setState({
                 searchText: elm.value
             });
+            this.searchWithLoadedData = true;
         } else {
-            let filters = this.state.filters;
+            const filters = this.state.filters;
             filters.map((filter) => {
-                for(let name in filter) {
-                    if(name === elm.name) {
-                        filter[name] = elm.value;
-                    }
+                if(filter.displayName + '_min' === elm.name) {
+                    filter.min_value = elm.value;
+                } else if(filter.displayName + '_max' === elm.name) {
+                    filter.max_value = elm.value;
                 }
             });
 
@@ -113,11 +123,10 @@ class FoodSearch extends React.Component {
 
 
     getFoods(url) {
-        if(this.state.loaded && this.state.searchWithLoadedData) {
+        if(this.state.loaded && this.searchWithLoadedData) {
             this.searchLoadedData();
-            console.info('using loaded data');
         } else {
-           this.getFoodsFromAPI(url)
+            this.getFoodsFromAPI(url)
         }
     }
     /**
@@ -126,28 +135,27 @@ class FoodSearch extends React.Component {
      */
     getFoodsFromAPI(url) {
         fetch(url)
-                .then(response => {
-                    if (response.status !== 200) {
-                        return this.setState({
-                            errorMessage: "Something went wrong",
-                            foods: []
-                        });
-                    }
-                    this.timeout = null;
-                    return response.json();
-                })
-                .then(data => {
-                    if (data.length > 0) {
-                        this.setState({errorMessage: "No results found"})
-                    }
-                    console.info('server data loaded');
-                    this.setState({
-                        foods: data,
-                        originalFoods: data,
-                        loaded: true,
-                        errorMessage: ""
+            .then(response => {
+                if (response.status !== 200) {
+                    return this.setState({
+                        errorMessage: "Something went wrong",
+                        foods: []
                     });
+                }
+                this.timeout = null;
+                return response.json();
+            })
+            .then(data => {
+                if (data.length > 0) {
+                    this.setState({errorMessage: "No results found"})
+                }
+                this.setState({
+                    foods: data,
+                    originalFoods: data,
+                    loaded: true,
+                    errorMessage: ""
                 });
+            });
     }
 
     /**
@@ -156,31 +164,11 @@ class FoodSearch extends React.Component {
     searchLoadedData() {
         const searchResults = [];
         const searchText = this.state.searchText.toLowerCase();
-        let flag = true;
         this.state.originalFoods.map(food => {
             if(food.name.toLowerCase().indexOf(searchText) > -1) {
-                food.nutrients.map((nutrient) => {
-                    this.state.filters.map(filter => {
-                        for(let filterName in filter) {
-                            if((nutrient.nutrient.toLowerCase().indexOf(filterName.toLowerCase()) > -1) &&
-                                (Number(nutrient.value) < filter[filterName])) {
-                                flag = false;
-                                break;
-                            }
-                        }
-                    })
-                })
-                if(flag) {
-                    if (food.nutrients.length > 0) {
-                        searchResults.push(food);
-                    } else {
-                    }
-
-                }
-                flag = true;
+                searchResults.push(food);
             }
-
-        })
+        });
         if (searchResults.length === 0) {
             this.setState({errorMsg: "No results found"})
         }

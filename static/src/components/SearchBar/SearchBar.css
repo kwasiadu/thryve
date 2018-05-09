@@ -22,7 +22,7 @@
 }
 
 .SearchBar_form .form-group {
-    width: 200px;
+    width: 260px;
     display: inline-flex;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -33,16 +33,25 @@
 
 .SearchBar_form label {
     margin: 0;
+    width: 120px;
 }
 
 .SearchBar_form input {
     border-radius: 5px;
 }
 
+.SearchBar_form .form-group .input-group {
+    width: 120px;
+    margin-left: 10px;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .SearchBar_form .form-group input {
     background: rgba(255, 0, 0, 0.05);
-    width: 60px;
-    margin-left: 10px;
+    width: 50px;
 }
 
 
